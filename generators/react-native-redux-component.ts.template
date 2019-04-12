@@ -1,0 +1,37 @@
+import React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { @@Component_Name@@ActionCreators } from 'path/to/your/reducer';
+
+export interface I@@Component_Name@@Props{
+    actions: any;
+}
+
+class @@Component_Name@@ extends React.Component<I@@Component_Name@@Props> {
+    constructor(props: I@@Component_Name@@Props) {
+        super(props);
+    }
+
+    render() {
+        return (
+            // TODO: Place your component here
+        );
+    }
+}
+
+const mapStateToProps = (state: IAppState) => {
+    return {
+        // TODO: map your state to props
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        actions: bindActionCreators(@@Component_Name@@ActionCreators, dispatch)
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(@@Component_Name@@);

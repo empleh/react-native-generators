@@ -1,0 +1,13 @@
+import React from 'react';
+
+export interface I@@Component_Name@@Props{
+
+}
+
+const @@Component_Name@@ = (props: I@@Component_Name@@Props) => {
+    return (
+      // TODO: Place your component here
+    );
+};
+
+export default @@Component_Name@@;

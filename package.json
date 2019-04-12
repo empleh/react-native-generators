@@ -1,0 +1,10 @@
+{
+    "name": "react-native-generators",
+    "version": "1.0.0",
+    "scripts": {
+        "gen-atom": "node generator.js --atom",
+        "gen-redux": "node generator.js --redux"
+    },
+    "dependencies": {},
+    "devDependencies": {}
+}
