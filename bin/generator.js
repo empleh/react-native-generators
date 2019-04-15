@@ -1,8 +1,11 @@
-/* File System Object */
+#!/usr/bin/env node
+'use strict';
+
 var fs = require('fs');
+var filePath = require('path');
+var pathPrefix = filePath.resolve('node_modules/@ms/react-templates/bin');
 
 const readGenerator = (err, data) => {
-    /* If an error exists, show it, otherwise show the file */
     if (err) {
         Function('error', 'throw error')(err);
         return;
@@ -30,7 +33,7 @@ const writeTemplateToFile = (path, name, fileContent) => {
         fs.mkdirSync(path, { recursive: true });
     }
 
-    fs.writeFile(`${path}${name}.ts`, fileContent, err => {
+    fs.writeFile(`${path}${name}.tsx`, fileContent, err => {
         if (err) throw err;
 
         console.log('File Generated');
@@ -38,7 +41,7 @@ const writeTemplateToFile = (path, name, fileContent) => {
 };
 
 const generateAtom = (path, name) => {
-    fs.readFile('generators/react-native-atom-component.ts.template', 'utf-8', (err, data) => {
+    fs.readFile(pathPrefix + '/generators/react-atom-component.ts.template', 'utf-8', (err, data) => {
         const template = readGenerator(err, data);
 
         const replacedTemplate = replaceTemplate(template, name);
@@ -48,7 +51,7 @@ const generateAtom = (path, name) => {
 };
 
 const generateRedux = (path, name) => {
-    fs.readFile('generators/react-native-redux-component.ts.template', 'utf-8', (err, data) => {
+    fs.readFile(pathPrefix + '/generators/react-redux-component.ts.template', 'utf-8', (err, data) => {
         const template = readGenerator(err, data);
 
         const replacedTemplate = replaceTemplate(template, name);
@@ -62,13 +65,35 @@ const typeMap = {
     ['--redux']: generateRedux
 };
 
-execute = () => {
+const HELP_MESSAGE = `   Invalid arguments
+    
+    Start with a type to generate
+        ${Object.keys(typeMap).reduce((a, b) => a + '\n        ' + b)}
+        
+    Next pass a file name with optional path
+        
+    Example:
+        react-gen --atom src/atoms/input
+`;
+
+const run = () => {
     const args = process.argv.slice(process.argv.findIndex(a => a.startsWith('--')));
+
+    if (args.length <= 1) {
+        console.log(HELP_MESSAGE);
+        return;
+    }
+
     const type = args[0];
     const pathIndex = args[1].lastIndexOf('/') + 1;
     const path = args[1].substring(0, pathIndex);
     const name = args[1].substring(pathIndex);
 
+    if (!typeMap[type]) {
+        console.log(HELP_MESSAGE);
+    }
+
     typeMap[type](path, name);
 };
-execute();
+
+run();

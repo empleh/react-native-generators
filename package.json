@@ -1,10 +1,12 @@
 {
-    "name": "react-native-generators",
+    "name": "react-generators",
     "version": "1.0.0",
     "scripts": {
-        "gen-atom": "node generator.js --atom",
-        "gen-redux": "node generator.js --redux"
+        "test-gen": "node bin/generator.js"
     },
     "dependencies": {},
-    "devDependencies": {}
+    "devDependencies": {},
+    "bin": {
+        "react-gen": "bin/generator.js"
+    }
 }
